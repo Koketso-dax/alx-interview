@@ -1,35 +1,34 @@
 #!/usr/bin/python3
 """
-    checkUnlockAll func module
-    Returns True if all boxes can be opened, else False
+    checkUnlockAll function module
+    Returns True if all boxes can be opened returns False otherwise.
 """
 
 
-def canUnlockAll(boxes):
+def canUnlockAll(boxes: list) -> bool:
     """
-    Returns True if all boxes can be opened, else False
-    # Check if the input is a list
-    if not isinstance(boxes, list):
-        return False
-    # Check if the list is empty
-    if not boxes:
-        return False
-    # Check if the first box is empty
+    Returns True if all boxes can be opened else returns False.
+    Args:
+        boxes (list): list of lists of positive integers.
+    ---
+    Returns:
+        bool: True if all boxes can be opened else returns False.
+    ---
+    Example:
+        >>> canUnlockAll([[1], [2], [3], [4], []])
+        True
+        >>> canUnlockAll([[1, 4, 6], [2], [0, 4, 1], [5, 6, 2], [3], [4, 1], [6]])
+        True
+        >>> canUnlockAll([[1, 4], [2], [0, 4, 1], [3], [], [4, 1], [5, 6]])
+        False
     """
-    if not boxes:
+    if not boxes or type(boxes) is not list:
         return False
-
-    # Initialize a set to keep track of opened boxes
-    opened_boxes = set()
-    opened_boxes.add(0)  # Start with the first box
-
-    # Iterate through the boxes
-    for i in range(len(boxes)):
-        # Check if the current box is opened
-        if i in opened_boxes:
-            # Add the keys in the current box to the set of opened boxes
-            for key in boxes[i]:
-                opened_boxes.add(key)
-
-    # Check if all boxes are opened
-    return len(opened_boxes) == len(boxes)
+    unlocked = [0]
+    for n in unlocked:
+        for key in boxes[n]:
+            if key not in unlocked and key < len(boxes):
+                unlocked.append(key)
+    if len(unlocked) == len(boxes):
+        return True
+    return False

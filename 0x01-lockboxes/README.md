@@ -12,7 +12,31 @@ Problem breakdown:
 
 <code> [ [1, 4, 6], [2], [0, 4, 1], [5, 6, 2], [3], [4, 1], [6] ] </code>
 
-<p> This case should also return `True` because if we evaluate for each key from indeces 0 to (n - 1), we have a series of paths that eventually allow all the boxes to be opened:
+<p> This case should also return `True` because if we evaluate for each key from indeces 0 to (n - 1), we have a series of paths that eventually allow all the boxes to be opened. N.B: we will ignore keys we have already encountered:
     - [0] is open.
-    - [0] has the connections ` [0] -> [1] `, ` [0] -> [4] `, 
+    - [0] has keys for [1], [4] and [6]
+    - [1] has a key for [2]
+    - [4] has a key for [3]
+    - [3] has a key for [5] 
+</p>
+
+<p> With this all the boxes have been opened. Some boxes we pointless to explore because at the point of execution where they were encountered, the keys they contained were already acquired. Now for the case were not all the boxes are open: </p>
+
+<code> [ [1, 4], [2], [0, 4, 1], [3], [], [4, 1], [5, 6] ] </code>
+
+<p> In this case the function should return `False` because we only have keys for 0 to 2 and 4. 4 is empty and most of the keys repeat values we have already explored. Furthermore there is no way to reach nodes 3, 5 and 6:
+    - [0] is open.
+    - [0] has keys for [1] and [4]
+    - [1] has a key for [2]
+    - [4] is empty    
+</p>
+
+Solution:
+
+<p> We will perform the same followed in the above examples with some additional checks:
+    - Check if `boxes` is not None and is of type list.
+    - Initialize a list of `unlocked_boxes` with [0] as the only value.
+    - For each unlocked box, append keys to `unlocked_boxes` if it the key is not already in the list and `0 < key < (n - 1)`
+    - After iterating through all the available (reachable) boxes, check if `unlocked_boxes`.count() == len(boxes).
+    - Return True if so and False otherwise.
 </p>
