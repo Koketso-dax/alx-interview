@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """ This script reads stdin line by line and computes these metrics:
-input format: <IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status code> <file size>
+input format:
+<IP Address> - [<date>] "GET /projects/260 HTTP/1.1" <status code> <file size>
 if the format is incorrect, the line is skipped.
 After every 10 lines and/or a keyboard interruption (CTRL + C)
 The following is printed:
-Total file size: File size: <total size>
+File size: <total size>
 <total size> is the aggregate of <file size>
 Number of lines by status code:
 possible status code: [200, 301, 400, 401, 403, 404, 405, 500]
