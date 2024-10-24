@@ -51,7 +51,7 @@ if __name__ == "__main__":
                 log["file_size"] += file_size
 
                 # status code
-                if (code.isdecimal()):
+                if (code.isnumeric()):
                     log["code_frequency"][code] += 1
 
                 if (line_count % 10 == 0):
