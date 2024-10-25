@@ -35,7 +35,7 @@ def signal_handler(sig, frame):
 
 if __name__ == "__main__":
     regex = re.compile(
-    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d+\] "GET \/projects\/260 HTTP\/1.1" (?: (\d{3}) (\d+))?')  # nopep8
+    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d+\] "GET \/projects\/260 HTTP\/1.1" (.{3,}) (\d+)')  # nopep8
 
     line_count = 0
     log = {}
@@ -55,11 +55,10 @@ if __name__ == "__main__":
                 file_size = int(match.group(2))
 
                 # File size
-                if file_size and file_size.isdigit():
-                    log["file_size"] += int(file_size)
+                log["file_size"] += file_size
 
                 # status code
-                if code and code.isdigit():
+                if (code.isnumeric()):
                     log["code_frequency"][code] += 1
 
                 if (line_count % 10 == 0):
