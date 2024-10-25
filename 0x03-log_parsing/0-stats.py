@@ -56,11 +56,10 @@ if __name__ == "__main__":
                 file_size = int(match.group(2))
 
                 # File size
-                if file_size.isdigit():
-                    log["file_size"] += int(file_size)
+                log["file_size"] += file_size
 
                 # status code
-                if code in log["code_frequency"]:
+                if (code.isdigit()):
                     log["code_frequency"][code] += 1
 
                 if (line_count % 10 == 0):
