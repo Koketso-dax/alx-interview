@@ -13,9 +13,10 @@ if a status code doesnt appear or is not an integer, pass
 format: <status code>: <number>
 status codes are printed ascending order
 """
+import signal
 import sys
 import re
-import signal
+
 
 def print_stats(log: dict) -> None:
     """
@@ -26,9 +27,11 @@ def print_stats(log: dict) -> None:
         if log["code_frequency"][code]:
             print("{}: {}".format(code, log["code_frequency"][code]))
 
+
 def signal_handler(sig, frame):
     print_stats(log)
     sys.exit(0)
+
 
 if __name__ == "__main__":
     regex = re.compile(
