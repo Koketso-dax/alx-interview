@@ -9,10 +9,11 @@ File size: <total size>
 <total size> is the aggregate of <file size>
 Number of lines by status code:
 possible status code: [200, 301, 400, 401, 403, 404, 405, 500]
-if a status code doesn’t appear or is not an integer, pass
+if a status code doesnt appear or is not an integer, pass
 format: <status code>: <number>
 status codes are printed ascending order
 """
+import signal
 import sys
 import re
 
@@ -27,6 +28,11 @@ def print_stats(log: dict) -> None:
             print("{}: {}".format(code, log["code_frequency"][code]))
 
 
+def signal_handler(sig, frame):
+    print_stats(log)
+    sys.exit(0)
+
+
 if __name__ == "__main__":
     regex = re.compile(
     r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d+\] "GET /projects/260 HTTP/1.1" (.{3}) (\d+)')  # nopep8
@@ -37,6 +43,8 @@ if __name__ == "__main__":
     log["code_frequency"] = {
         str(code): 0 for code in [
             200, 301, 400, 401, 403, 404, 405, 500]}
+
+    signal.signal(signal.SIGINT, signal_handler)
 
     try:
         for line in sys.stdin:
